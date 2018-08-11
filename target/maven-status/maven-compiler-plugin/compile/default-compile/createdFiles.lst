@@ -1,0 +1,11 @@
+br/com/dmsec/idup/controller/FileController.class
+br/com/dmsec/idup/service/FileStorageService.class
+META-INF/spring-configuration-metadata.json
+br/com/dmsec/idup/exception/FileStorageException.class
+br/com/dmsec/idup/models/ListHashs.class
+br/com/dmsec/idup/exception/MyFileNotFoundException.class
+br/com/dmsec/idup/payload/UploadFileResponse.class
+br/com/dmsec/idup/App.class
+br/com/dmsec/idup/repository/ListHashRepository.class
+br/com/dmsec/idup/property/FileStorageProperties.class
+br/com/dmsec/idup/property/IpfsProperties.class
