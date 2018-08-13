@@ -19,7 +19,7 @@ public class HashController {
 	
 	@RequestMapping(method=RequestMethod.POST, path="/criarlista")
 	public ListHashs criarListaRest(@RequestBody ListHashs listHashs) {
-		listHashs.setId(UUID.randomUUID());
+		
 		return listHashRepository.save(listHashs);
 	}
 	

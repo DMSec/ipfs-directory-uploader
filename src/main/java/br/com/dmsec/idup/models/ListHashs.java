@@ -6,7 +6,7 @@ import java.util.UUID;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
@@ -14,10 +14,8 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @Table
 public class ListHashs {
 	
-	@PrimaryKeyColumn(type=PrimaryKeyType.PARTITIONED)
-	private UUID id;
-	
-	@PrimaryKeyColumn(type=PrimaryKeyType.CLUSTERED)
+		
+	@PrimaryKey
 	private String hash;
 	
 	private String name;
@@ -32,13 +30,7 @@ public class ListHashs {
 	private LocalTime horario;
 
 	
-	public UUID getId() {
-		return id;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
-	}
+	
 	
 	public LocalTime getHorario() {
 		return horario;
