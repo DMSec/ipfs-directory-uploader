@@ -27,10 +27,19 @@ public class ListHashs {
 	private String largeSize;
 	
 	private Integer type;
-	
+		
 	@NotNull
 	private LocalTime horario;
 
+	
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+	
 	public LocalTime getHorario() {
 		return horario;
 	}

@@ -1,5 +1,6 @@
 package br.com.dmsec.idup.controller;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
+import br.com.dmsec.idup.models.ListHashs;
 import br.com.dmsec.idup.payload.UploadFileResponse;
 import br.com.dmsec.idup.property.FileStorageProperties;
 import br.com.dmsec.idup.property.IpfsProperties;
@@ -18,15 +19,13 @@ import br.com.dmsec.idup.service.FileStorageService;
 import io.ipfs.api.IPFS;
 import io.ipfs.api.MerkleNode;
 import io.ipfs.api.NamedStreamable;
-
 import javax.servlet.http.HttpServletRequest;
+
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.time.LocalTime;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +39,8 @@ public class FileController {
     private FileStorageService fileStorageService;
     private boolean createDir = true;
     
+    @Autowired
+    HashController hashController;
     
     @Autowired
     private IpfsProperties configIPFS;
@@ -65,21 +66,13 @@ public class FileController {
                 .path("/downloadFile/")
                 .path(fileName)
                 .toUriString();
-        
-       
+               
         
         return new UploadFileResponse(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());
     }
     
     
-
-    public File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException 
-    {
-        File convFile = new File( multipart.getOriginalFilename());
-        multipart.transferTo(convFile);
-        return convFile;
-    }
     
     @PostMapping("/uploadMultipleFiles")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, @RequestParam("packageName") String packageName) {
@@ -107,24 +100,44 @@ public class FileController {
 			  System.out.println("Value of element :"+ value);
 			}
 			System.out.println(hashs.get(hashs.size()-1));
-		     
-        	
+		    
+			ListHashs listHashsModel = new ListHashs();
+			listHashsModel.setHash(hashs.get(hashs.size()-1));
+			listHashsModel.setHorario(LocalTime.now());
+			listHashsModel.setName(packageName);
+		
+			
+			hashController.criarListaRest(listHashsModel);
+			
+			
+			deleteDirectory(f);
+			
 			
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
     	
     	return listFileResponse;
-    	
-    
-    			
-    			
-    			
+    			    			
     }
 
-    @GetMapping("/downloadFile/{fileName:.+}")
+    private void deleteDirectory(File f) {
+    	String[]entries = f.list();
+		for(String s: entries){
+		    File currentFile = new File(f.getPath(),s);
+		    currentFile.delete();
+		}
+		f.delete();
+	}
+
+
+
+	@GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource
         Resource resource = fileStorageService.loadFileAsResource(fileName);
@@ -148,7 +161,9 @@ public class FileController {
                 .body(resource);
     }
 
-
+    
+    //TO-DO
+        
 
 
 	public boolean isCreateDir() {

@@ -5,6 +5,8 @@
 /media/douglasmsi/dados/Tools/ipfs-directory-uploader/src/main/java/br/com/dmsec/idup/payload/UploadFileResponse.java
 /media/douglasmsi/dados/Tools/ipfs-directory-uploader/src/main/java/br/com/dmsec/idup/property/IpfsProperties.java
 /media/douglasmsi/dados/Tools/ipfs-directory-uploader/src/main/java/br/com/dmsec/idup/App.java
+/media/douglasmsi/dados/Tools/ipfs-directory-uploader/src/main/java/br/com/dmsec/idup/payload/UploadHashsResponse.java
+/media/douglasmsi/dados/Tools/ipfs-directory-uploader/src/main/java/br/com/dmsec/idup/controller/HashController.java
 /media/douglasmsi/dados/Tools/ipfs-directory-uploader/src/main/java/br/com/dmsec/idup/exception/MyFileNotFoundException.java
 /media/douglasmsi/dados/Tools/ipfs-directory-uploader/src/main/java/br/com/dmsec/idup/controller/FileController.java
 /media/douglasmsi/dados/Tools/ipfs-directory-uploader/src/main/java/br/com/dmsec/idup/repository/ListHashRepository.java
